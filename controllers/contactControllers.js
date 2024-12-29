@@ -1,24 +1,25 @@
+const asyncHandler = require("express-async-handler");
 const errorHandler = require("../middleware/errorHandler");
 
-exports.getContact = (req,res)=> {
-    res.send("get all contacts");
-};
+exports.getContact = asyncHandler(async(req,res)=> {
+   await res.send("get all contacts");
+});
 
-exports.createContact = (req,res)=> {
+exports.createContact = asyncHandler(async(req,res)=> {
    
     res.send("create all contacts");
     if(!name){
         throw errorHandler;
         
     }
-};
+});
 
-exports.updateContact = (req,res)=> {
+exports.updateContact = asyncHandler(async(req,res)=> {
     res.send("update all contacts");
-};
+});
 
 
-exports.deleteContact = (req,res)=> {
+exports.deleteContact =asyncHandler(async(req,res)=> {
     res.send("delete all contacts");
-};
+});
 
