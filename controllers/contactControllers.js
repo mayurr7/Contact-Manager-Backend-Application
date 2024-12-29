@@ -1,9 +1,16 @@
+const errorHandler = require("../middleware/errorHandler");
+
 exports.getContact = (req,res)=> {
     res.send("get all contacts");
 };
 
 exports.createContact = (req,res)=> {
+   
     res.send("create all contacts");
+    if(!name){
+        throw errorHandler;
+        
+    }
 };
 
 exports.updateContact = (req,res)=> {
