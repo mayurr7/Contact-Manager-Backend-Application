@@ -10,6 +10,7 @@ router.route("/")
 
 //UPDATE REQ || DELETE REQ
 router.route("/:id")
+.get(contactControllers.getOneContact)
 .put(contactControllers.updateContact)
 .delete(contactControllers.deleteContact);
 
