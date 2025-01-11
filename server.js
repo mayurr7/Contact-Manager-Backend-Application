@@ -2,6 +2,8 @@ const express = require("express");
 const errorHandler = require("./middleware/errorHandler");
 const connectDb = require("./config/dbConnection");
 const dotenv = require("dotenv").config();
+const contactRoute = require("./routes/contactRoutes");
+const userRoute = require("./routes/userRoutes");
 
 connectDb();
 const app = express();
@@ -14,7 +16,9 @@ app.use(express.json());
 
 
 //MIDDLEWARE USED
-app.use("/api/contact", require("./routes/contactRoutes"));
+app.use("/api/contact", contactRoute);
+app.use("/api/user", userRoute);
+
 
 app.use(errorHandler);
 
