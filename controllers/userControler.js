@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const bcrypt = require('bcrypt');
 const User = require('../models/userSchema');
+const jwt =  require('jsonwebtoken');
 
 //@ Sign Up the User
 
@@ -30,16 +31,53 @@ exports.signnupUser = asyncHandler(async(req,res) => {
     });
     res.status(201).json({
         message: "user sign up succsfully",
-        user
+        id: user._id,
+        name: user.name,
+        email: user.email
     })
 });
 
 
 //@Login User
 
-exports.loginUser = asyncHandler(async(req,res,next) => {
-    
+exports.loginUser = asyncHandler(async (req, res, next) => {
+    const { email, password } = req.body;
+    console.log("Request received:", { email, password });
+
+    if (!email || !password) {
+        res.status(400);
+        throw new Error("All fields are required..!");
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+        throw new Error("User not found in DB");
+    }
+
+    if (user) {
+       
+        const isPassValid = await bcrypt.compare(password, user.password);
+
+        if (isPassValid) {
+            const accessToken = jwt.sign(
+                {
+                    user: {
+                        name: user.name,
+                        email: user.email,
+                        id: user.id,
+                    },
+                },
+                process.env.ACCESS_TOKEN_SECRATE,
+                { expiresIn: "10m" }
+            );
+            return res.status(200).json({ accessToken });
+        } else {
+            res.status(401);
+            throw new Error("Email or Password invalid");
+        }
+    }
 });
+
 
 
 //@check the current user

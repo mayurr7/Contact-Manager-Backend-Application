@@ -4,7 +4,7 @@ const { signnupUser, loginUser, checkUser } = require('../controllers/userContro
 const router = express.Router();
 
 router.post("/signup",signnupUser);
-router.get("/login", loginUser);
+router.post("/login", loginUser);
 router.get('/current', checkUser);
 
 module.exports = router;
