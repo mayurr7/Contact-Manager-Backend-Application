@@ -68,7 +68,7 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
                     },
                 },
                 process.env.ACCESS_TOKEN_SECRATE,
-                { expiresIn: "10m" }
+                { expiresIn: "60m" }
             );
             return res.status(200).json({ accessToken });
         } else {
