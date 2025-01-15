@@ -83,5 +83,5 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
 //@check the current user
 
 exports.checkUser = asyncHandler(async(req,res,next) => {
-
+        res.json(req.user);
 });
