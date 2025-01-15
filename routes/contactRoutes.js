@@ -1,6 +1,10 @@
 const express = require("express");
 const router  = express.Router();
 const contactControllers = require('../controllers/contactControllers');
+const validateToken = require("../middleware/validateTokenHandler");
+
+router.use(validateToken);
+
 
 //GET REQ || CREATE REQ
 router.route("/")

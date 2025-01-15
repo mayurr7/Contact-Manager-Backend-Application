@@ -15,10 +15,6 @@ const validateToken = asyncHandler(async(req,res,next) => {
         try {
             const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRATE);
             req.user = decoded.user;
-            res.json({
-                decoded
-            })
-           
             next(); // Proceed to the next middleware
         } catch (error) {
             res.status(401);
