@@ -80,7 +80,9 @@ exports.updateContact = asyncHandler(async (req, res) => {
       throw new Error("Contact not updated");
     }
   } catch (error) {
-      console.log(error);
+    res.status(404).json({
+      message: "Some error happend"    
+    });
       throw Error;
       
       
@@ -89,14 +91,28 @@ exports.updateContact = asyncHandler(async (req, res) => {
 
 exports.deleteContact = asyncHandler(async (req, res) => {
   const contacts = await Contact.findByIdAndDelete(req.params.id);
+ try {
   if (!contacts) {
     res.status(404);
     throw new Error("Contact Not found in Database");
   }
+
+  if (Contact.user_id.toString() !== req.user.id) {
+    res.status(403);
+    throw new Error("User don't have permition to do this task");
+  }
+
 
   res.status(200).json({
     status: "sucess",
     message: "contact deleted successfully",
     contacts,
   });
+ } catch (error) {
+    res.status(404).json({
+      message: "Some error happend"    
+    });
+    throw Error;
+ }
+  
 });
